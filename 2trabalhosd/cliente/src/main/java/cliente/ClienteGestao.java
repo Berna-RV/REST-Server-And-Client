@@ -11,7 +11,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 /**
  *
- * @author berna-dev
+ * @authors Bernardo e Daniel
  */
 public class ClienteGestao {
 
