@@ -1,0 +1,5 @@
+servidor/AdController.class
+servidor/Ad.class
+servidor/StartApplication.class
+servidor/AdNotFoundException.class
+servidor/AdRepository.class
