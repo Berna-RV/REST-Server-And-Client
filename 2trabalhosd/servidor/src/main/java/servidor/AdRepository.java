@@ -6,13 +6,38 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 interface AdRepository extends JpaRepository<Ad, Long> {
-    
-    List<Ad> findAllByEstado(String estado);
-    
-    List<Ad> findAllByEstadoAndTipoAnuncio(String estado, String tipoAnuncio);
-    
-    List<Ad> findAllByDetalhesAndLocalizacaoAndEstado(String detalhes, String localizacao, String estado);
-    
-    @Query("SELECT u FROM Ad AS u JOIN FETCH u.mensagens WHERE u.aid=:aid")
-    public Ad findAllMensagensByAid(@Param("aid") Long aid);
+
+    List<AdWithoutMessages> findAllByEstado(String estado);
+
+    List<AdWithoutMessages> findAllByEstadoAndTipoAnuncio(String estado, String tipoAnuncio);
+
+    List<AdWithoutMessages> findAllByDetalhesAndLocalizacaoAndEstado(String detalhes, String localizacao, String estado);
+
+    AdWithoutMessages findByAid(Long aid);
+
+}
+
+interface AdWithoutMessages {
+
+    Long getAid();
+
+    String getTipoAnuncio();
+
+    String getTipologia();
+
+    String getDetalhes();
+
+    String getLocalizacao();
+
+    String getGenero();
+
+    String getPreco();
+
+    String getAnunciante();
+
+    String getContacto();
+
+    String getData();
+
+    String getEstado();
 }

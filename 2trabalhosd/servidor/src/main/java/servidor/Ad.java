@@ -43,11 +43,11 @@ class Ad implements Serializable{
         return aid;
     }
 
-    public void setTipo_Anuncio(String tipo_anuncio) {
+    public void setTipoAnuncio(String tipo_anuncio) {
         this.tipoAnuncio = tipo_anuncio;
     }
 
-    public String getTipo_Anuncio() {
+    public String getTipoAnuncio() {
         return tipoAnuncio;
     }
 
@@ -123,7 +123,7 @@ class Ad implements Serializable{
         return estado;
     }
     
-    public List<String> getMessages(){
+    public List<String> getMensagens(){
         return mensagens;
     }
     

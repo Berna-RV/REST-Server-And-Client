@@ -56,14 +56,14 @@ class AdController {
 
     /*Listar anuncios (com estado ativo) do tipo oferta*/
     @GetMapping("/geral/anuncios/ofertas/lista")
-    public List<Ad> listOfOffers() {
+    public List<AdWithoutMessages> listOfOffers() {
         return repository.findAllByEstadoAndTipoAnuncio("ativo", "oferta");
 
     }
 
     /*Listar anuncios (com estado ativo) do tipo procura*/
     @GetMapping("/geral/anuncios/pesquisas/lista")
-    public List<Ad> listOfSearches() {
+    public List<AdWithoutMessages> listOfSearches() {
 
         return repository.findAllByEstadoAndTipoAnuncio("ativo", "procura");
 
@@ -71,21 +71,21 @@ class AdController {
 
     /*Procurar anúncios, enviando texto a pesquisar na descrição, e opcionalmente uma localização*/
     @GetMapping("/geral/anuncios/{descricao}/{zona}")
-    public List<Ad> listByDescription(@PathVariable String descricao, @PathVariable String zona) {
+    public List<AdWithoutMessages> listByDescription(@PathVariable String descricao, @PathVariable String zona) {
         return repository.findAllByDetalhesAndLocalizacaoAndEstado(descricao, zona, "ativo");
 
     }
 
     /*Obter todos os detalhes de um anúncio, dado o seu identificador (aid)*/
     @GetMapping("/geral/anuncios/{id}")
-    public Ad getAdByAid(@PathVariable Long id) {
-        return repository.findById(id).orElseThrow(() -> new AdNotFoundException(id));
+    public AdWithoutMessages getAdByAid(@PathVariable Long id) {
+        return repository.findByAid(id);
     }
 
     @PostMapping("/geral/anuncios/mensagens")
     public Ad sendMessageByAid(@RequestBody JSONObject object) {
         List<String> mensagens;
-        mensagens = repository.findById(Long.valueOf(object.getAsString("id"))).get().getMessages();
+        mensagens = repository.findById(Long.valueOf(object.getAsString("id"))).get().getMensagens();
 
         mensagens.add(object.getAsString("mensagem"));
 
@@ -95,14 +95,14 @@ class AdController {
     }
 
     @GetMapping("/geral/anuncios/mensagens/{aid}")
-    public Ad listMessagesByAid(@PathVariable Long aid) {
+    public List<String> listMessagesByAid(@PathVariable Long aid) {
 
-        return repository.findAllMensagensByAid(aid);
-
+        Ad anuncio = repository.findById(aid).get();
+        return anuncio.getMensagens();
     }
     
     @GetMapping("/gestao/anuncios/{estado}")
-    public List<Ad> listAdsByState(@PathVariable String estado){
+    public List<AdWithoutMessages> listAdsByState(@PathVariable String estado){
         return repository.findAllByEstado(estado);
     }
     
